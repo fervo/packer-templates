@@ -69,7 +69,7 @@
     },
     {
       "type": "atlas",
-      "artifact": "{{user `atlas_username`}}/{{user `atlas_name`}}",
+      "artifact": "fervo/ultron",
       "artifact_type": "vagrant.box",
       "metadata": {
           "provider": "vmware_desktop",
