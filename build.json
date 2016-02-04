@@ -65,7 +65,7 @@
  "post-processors": [
     {
       "type": "vagrant",
-      "output": "output/{{.BuildName}}-{{.Provider}}.box"
+      "keep_input_artifact": false
     },
     {
       "type": "atlas",
