@@ -63,7 +63,7 @@
     }
   ],
  "post-processors": [
-    {
+    [{
       "type": "vagrant",
       "keep_input_artifact": false
     },
@@ -75,6 +75,6 @@
           "provider": "vmware_desktop",
           "version": "0.0.1"
       }
-    }
+    }]
  ]
 }
