@@ -1,18 +1,20 @@
 {
   "variables": {
+    "headless": "true",
+    "disk_size": "65536",
     "version": ""
   },
   "builders": [
     {
-      "name": "precise64",
-      "vm_name": "precise64",
-      "vmdk_name": "precise64-disk0",
+      "name": "ultron",
+      "vm_name": "ultron",
+      "vmdk_name": "ultron-disk0",
       "type": "vmware-iso",
-      "headless": true,
-      "disk_size": 16384,
+      "headless": "{{user `headless`}}",
+      "disk_size": "{{user `disk_size`}}",
       "guest_os_type": "ubuntu-64",
-      "iso_url": "/Users/Shared/ISOs/ubuntu-12.04.4-server-amd64.iso",
-      "iso_checksum": "b802bb065df98c0530d782eb94778c2da19e10d6",
+      "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04.3-server-amd64.iso",
+      "iso_checksum": "0501c446929f713eb162ae2088d8dc8b6426224a",
       "iso_checksum_type": "sha1",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
@@ -25,7 +27,7 @@
         "/install/vmlinuz noapic ",
         "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/scripts/ubuntu-preseed.cfg ",
         "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
-        "hostname=precise64 ",
+        "hostname=ultron ",
         "fb=false debconf/frontend=noninteractive ",
         "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
         "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
@@ -61,9 +63,19 @@
     }
   ],
  "post-processors": [
-   {
-     "type": "vagrant",
-     "output": "output/{{.BuildName}}-{{.Provider}}.box"
-   }
+    {
+      "type": "vagrant",
+      "output": "output/{{.BuildName}}-{{.Provider}}.box"
+    },
+    {
+      "type": "atlas",
+      "only": ["vmware-iso"],
+      "artifact": "{{user `atlas_username`}}/{{user `atlas_name`}}",
+      "artifact_type": "vagrant.box",
+      "metadata": {
+          "provider": "vmware_desktop",
+          "version": "0.0.1"
+      }
+    },
  ]
 }
